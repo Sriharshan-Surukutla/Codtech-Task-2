@@ -1,0 +1,102 @@
+//Design verilog code for mealy FSM to detect 1010
+
+module mealyfsm(z,x,clk,rst);
+input x,clk,rst;
+output reg z;
+parameter A=2'b00;
+parameter B=2'b01;
+parameter C=2'b10;
+parameter D=2'b11;
+reg [1:0] state, next_state;
+always @(posedge clk or negedge rst)
+begin
+    if(!rst)
+        state<=A;
+    else
+        state<=next_state;
+end
+always @(state or x)
+begin
+    case(state)
+        A: begin
+            if (x==0)
+            begin
+                next_state<=A;
+                z<=0;
+            end
+            else
+            begin
+                next_state<=B;
+                z<=0;
+            end
+        end
+        B: begin
+            if (x==0)
+            begin
+                next_state<=C;
+                z<=0;
+            end
+            else
+            begin
+                next_state<=B;
+                z<=0;
+            end
+        end
+        C: begin
+            if(x==0)
+            begin
+                next_state<=A;
+                z<=0;
+            end
+            else
+            begin
+                next_state<=D;
+                z<=0;
+            end
+        end
+        D: begin
+            if(x==0)
+            begin
+                next_state<=A;
+                z<=1;
+            end
+            else
+            begin
+                next_state<=A;
+                z<=0;
+            end
+        end
+        default: next_state<=A;
+    endcase
+end
+endmodule
+
+
+//Test bench
+module tb_mealyfsm();
+reg clk,rst,x;
+wire z;
+mealyfsm uut(z,x,clk,rst);
+initial clk=0;
+always #2 clk=~clk;
+initial
+begin
+x=0; rst=0;
+#1 rst=1;
+#2 x=1;
+#3 x=1;
+#4 x=0;
+#4 x=1;
+#4 x=0;
+#4 x=1;
+#4 x=0;
+#4 x=1;
+#4 x=0;
+#4 x=1;
+#4 x=0;
+#4 x=1;
+#4 x=0;
+#4 x=1;
+#10 $finish;
+end
+endmodule

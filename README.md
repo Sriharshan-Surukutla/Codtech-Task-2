@@ -18,3 +18,5 @@ To represent some function inform of i/o that have some finite states
 Technologies used:
 
 Verilog HDL: Hardware description language to implement digital design
+![image](https://github.com/user-attachments/assets/a13a8559-c78c-40f5-8f9b-1bed9e03a2b9)
+
